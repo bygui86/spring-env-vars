@@ -8,10 +8,9 @@
 NAME := spring-env-vars
 
 BUILD_TOOL := ./mvnw
-GIT_COMMIT_HASH := $(shell git log --pretty=format:'%h' -n 1)
 JAR_FILE := $(shell find target -name '*.jar' 2>/dev/null)
 
-IMAGE_NAME := <SCOPE>/$(NAME)
+IMAGE_NAME := samples/$(NAME)
 IMAGE_TAG := latest
 IMAGE_EXPOSE_PORT := 8081
 DOCKER_HOST_IP := localhost
@@ -46,7 +45,6 @@ print-variables :		## Print variables values
 	@echo "NAME: $(NAME)"
 	@echo "- - - "
 	@echo "BUILD_TOOL: $(BUILD_TOOL)"
-	@echo "GIT_COMMIT_HASH: $(GIT_COMMIT_HASH)"
 	@echo "JAR_FILE: $(JAR_FILE)"
 	@echo "- - - "
 	@echo "IMAGE_NAME: $(IMAGE_NAME)"
@@ -115,24 +113,27 @@ java-debug :		## Run the application in debug mode through the generated fat-jar
 
 # DOCKER
 
-docker-prepare :		## Prepare the application to be containerised
+docker-prepare :		## Prepare application to be containerised
 	$(BUILD_TOOL) -DfailIfNoTests=false clean package
 
-docker-build : docker-prepare		## Build the docker IMAGE_NAME of the application
-	docker build -t $(IMAGE_NAME)-$(GIT_COMMIT_HASH):$(IMAGE_TAG) .
+docker-build : docker-prepare		## Build docker image
+	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
-docker-run : docker-build		## Run the containerised application through docker
-	docker run -d --name $(NAME) -p $(IMAGE_EXPOSE_PORT):$(IMAGE_EXPOSE_PORT) $(IMAGE_NAME)-$(GIT_COMMIT_HASH):$(IMAGE_TAG)
+docker-run :		## Run docker image as deamon
+	docker run -d --name $(NAME) -p $(IMAGE_EXPOSE_PORT):$(IMAGE_EXPOSE_PORT) $(IMAGE_NAME):$(IMAGE_TAG)
 
-docker-stop :		## Stop the containerised application
+docker-run-temp :		## Run docker image as temporary foreground
+	docker run -ti --rm --name $(NAME) -p $(IMAGE_EXPOSE_PORT):$(IMAGE_EXPOSE_PORT) $(IMAGE_NAME):$(IMAGE_TAG)
+
+docker-stop :		## Stop docker image
 	docker container stop -f $(NAME)
 
-docker-push : docker-build		## Push the docker application to the docker registry
-	docker push $(DOCKER_HOST_IP):$(DOCKER_HOST_PORT)/$(IMAGE_NAME)-$(GIT_COMMIT_HASH):$(IMAGE_TAG)
+docker-push : docker-build		## Push docker image to docker registry
+	docker push $(DOCKER_HOST_IP):$(DOCKER_HOST_PORT)/$(IMAGE_NAME):$(IMAGE_TAG)
 
-docker-delete-local : docker-stop		## Delete the docker IMAGE_NAME of the application
+docker-delete-local : docker-stop		## Delete docker image from local
 	docker container rm -f $(NAME)
 	docker image rm -f $(NAME)
 
-docker-delete-remote : docker-stop		## Delete the docker IMAGE_NAME of the application from the docker registry
-	docker image remove $(DOCKER_HOST_IP):$(DOCKER_HOST_PORT)/$(IMAGE_NAME)-$(GIT_COMMIT_HASH):$(IMAGE_TAG)
+docker-delete-remote : docker-stop		## Delete the docker image from remote
+	docker image remove $(DOCKER_HOST_IP):$(DOCKER_HOST_PORT)/$(IMAGE_NAME):$(IMAGE_TAG)

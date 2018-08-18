@@ -8,3 +8,11 @@
 * properties from kubernetes
 
 ## links
+[DONE]
+
+
+[IN-PROGRESS]
+
+
+[TODO]
+https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
