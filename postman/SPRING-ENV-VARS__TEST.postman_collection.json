@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "4f5991ed-dba1-4088-8237-82a6cf2c1a7c",
+		"name": "SPRING-ENV-VARS__TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get info - LOCAL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee393bb2-a870-4778-a4f5-80b59d8adec7",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"if (tests[\"200 OK\"]) {",
+							"    var data = JSON.parse(responseBody);",
+							"    tests[\"Body NOT NULL\"] = data !== null && data !== undefined;",
+							"    tests[\"Property classical OK\"] = data.classical == \"classical\";",
+							"    tests[\"Property envVarHome OK\"] = data.envVarHome !== null && data.envVarHome !== undefined && data.envVarHome !== \"\";",
+							"    tests[\"Property envVarPath OK\"] = data.envVarPath !== null && data.envVarPath !== undefined && data.envVarPath !== \"\";",
+							"    tests[\"Property envVarSpring OK\"] = data.envVarSpring !== null && data.envVarSpring !== undefined && data.envVarSpring == \"EMPTY\";",
+							"    tests[\"Property envVarDocker OK\"] = data.envVarDocker !== null && data.envVarDocker !== undefined && data.envVarDocker == \"EMPTY\";",
+							"    tests[\"Property envVarKube OK\"] = data.envVarKube !== null && data.envVarKube !== undefined && data.envVarKube == \"EMPTY\";",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8081/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get info - DOCKER",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cce3008e-fdd5-4d7e-89f4-6371da2869ef",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"if (tests[\"200 OK\"]) {",
+							"    var data = JSON.parse(responseBody);",
+							"    tests[\"Body NOT NULL\"] = data !== null && data !== undefined;",
+							"    tests[\"Property classical OK\"] = data.classical == \"classical\";",
+							"    tests[\"Property envVarHome OK\"] = data.envVarHome !== null && data.envVarHome !== undefined && data.envVarHome == \"/root\";",
+							"    tests[\"Property envVarPath OK\"] = data.envVarPath !== null && data.envVarPath !== undefined && data.envVarPath == \"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin\";",
+							"    tests[\"Property envVarSpring OK\"] = data.envVarSpring !== null && data.envVarSpring !== undefined && data.envVarSpring == \"EMPTY\";",
+							"    tests[\"Property envVarDocker OK\"] = data.envVarDocker !== null && data.envVarDocker !== undefined && data.envVarDocker == \"docker-var-test\";",
+							"    tests[\"Property envVarKube OK\"] = data.envVarKube !== null && data.envVarKube !== undefined && data.envVarKube == \"EMPTY\";",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8081/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get info - KUBE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff93cf54-9d07-4a1b-b6f8-b41da94b9b1c",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"tests[\"200 OK\"] = responseCode.code === 200;",
+							"",
+							"if (tests[\"200 OK\"]) {",
+							"    var data = JSON.parse(responseBody);",
+							"    tests[\"Body NOT NULL\"] = data !== null && data !== undefined;",
+							"    tests[\"Property classical OK\"] = data.classical == \"classical\";",
+							"    tests[\"Property envVarHome OK\"] = data.envVarHome !== null && data.envVarHome !== undefined && data.envVarHome == \"/root\";",
+							"    tests[\"Property envVarPath OK\"] = data.envVarPath !== null && data.envVarPath !== undefined && data.envVarPath == \"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin\";",
+							"    tests[\"Property envVarSpring OK\"] = data.envVarSpring !== null && data.envVarSpring !== undefined && data.envVarSpring == \"EMPTY\";",
+							"    tests[\"Property envVarDocker OK\"] = data.envVarDocker !== null && data.envVarDocker !== undefined && data.envVarDocker == \"docker-var-test\";",
+							"    tests[\"Property envVarKube OK\"] = data.envVarKube !== null && data.envVarKube !== undefined && data.envVarKube == \"kube-var-test\";",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://spring-env-vars.jx-staging.playground.interdiscount.online/info",
+					"protocol": "http",
+					"host": [
+						"spring-env-vars",
+						"jx-staging",
+						"playground",
+						"interdiscount",
+						"online"
+					],
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

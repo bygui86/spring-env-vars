@@ -19,7 +19,11 @@ public class InfoDto {
 
 	String classical;
 
-	String envVarGeneric;
+	String envVarHome;
+
+	String envVarPath;
+
+	String envVarSpring;
 
 	String envVarDocker;
 

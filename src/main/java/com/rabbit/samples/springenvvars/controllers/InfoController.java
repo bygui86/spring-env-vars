@@ -20,13 +20,19 @@ public class InfoController {
 	@Value("${property.classical:EMPTY}")
 	String classical;
 
-	@Value("${property.env.var.generic:EMPTY}")
-	String envVarGeneric;
+	@Value("${property.env.var.home}")
+	String envVarHome;
 
-	@Value("${property.env.var.docker:EMPTY}")
+	@Value("${property.env.var.path}")
+	String envVarPath;
+
+	@Value("${property.env.var.spring}")
+	String envVarSpring;
+
+	@Value("${property.env.var.docker}")
 	String envVarDocker;
 
-	@Value("${property.env.var.kube:EMPTY}")
+	@Value("${property.env.var.kube}")
 	String envVarKube;
 
 	@GetMapping
@@ -35,7 +41,9 @@ public class InfoController {
 
 		return InfoDto.builder()
 				.classical(getClassical())
-				.envVarGeneric(getEnvVarGeneric())
+				.envVarHome(getEnvVarHome())
+				.envVarPath(getEnvVarPath())
+				.envVarSpring(getEnvVarSpring())
 				.envVarDocker(getEnvVarDocker())
 				.envVarKube(getEnvVarKube())
 				.build();

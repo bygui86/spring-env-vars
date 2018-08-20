@@ -38,7 +38,7 @@
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 
 		<!-- spring -->
-		<spring-boot.version>2.0.2.RELEASE</spring-boot.version>
+		<spring-boot.version>2.0.4.RELEASE</spring-boot.version>
 
 		<!-- logging -->
 		<slf4.version>1.7.25</slf4.version>
